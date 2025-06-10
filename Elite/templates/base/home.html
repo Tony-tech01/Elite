@@ -1,0 +1,63 @@
+{% extends 'main.html' %}
+
+{% block content %}
+{% load static %}
+
+<div class="container">
+  
+ <div class="position-relative mb-5" style="height: 100%;">
+    <img src="{% static 'images/img_10.jpeg' %}" 
+         class="img-fluid w-100 h-100 rounded shadow" 
+         style="object-fit: cover; height: 100%;">
+    <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center" 
+         style="background: rgba(0,0,0,0.35);">
+      <h1 class="display-4 text-white fw-bold">Team after Training</h1>
+      <p class="lead text-white mb-4">Don't know the way forward? This is where your journey begins. Join us and let us help you achieve what you desire.</p>
+     
+    </div>
+</div>
+  
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body">
+          <h5 class="card-title text-success mb-3"><i class="bi bi-newspaper me-2"></i>Latest News</h5>
+          {% for news in rugby_news %}
+            <div class="d-flex mb-4 align-items-center">
+              <a href="{% url 'news_detail' news.id %}">
+                <img src="{{ news.image.url }}" alt="Image" class="img-fluid rounded me-3" style="width: 80px; height: 80px; object-fit: cover;">
+              </a>
+              <div>
+                <h6 class="mb-1"><a href="{% url 'news_detail' news.id %}" class="text-dark">{{ news.title }}</a></h6>
+                <a href="{% url 'news_detail' news.id %}" class="btn btn-outline-success btn-sm mt-1">Learn More</a>
+              </div>
+            </div>
+          {% empty %}
+            <p>No rugby news available.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body">
+          <h5 class="card-title text-success mb-3"><i class="bi bi-calendar-event me-2"></i>Upcoming Matches</h5>
+          {% if upcoming_matches %}
+            <ul class="list-group list-group-flush">
+              {% for match in upcoming_matches %}
+                <li class="list-group-item">
+                  <strong>{{ match.team1.name }}</strong> vs <strong>{{ match.team2.name }}</strong><br>
+                  <span>{{ match.match_date }} at {{ match.match_time }}</span><br>
+                  <span>Venue: {{ match.venue }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p>No upcoming matches.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

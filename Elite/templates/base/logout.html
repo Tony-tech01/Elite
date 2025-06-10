@@ -1,0 +1,10 @@
+{% extends 'main.html'%} {% block content%}
+<form method="POST" class="container my-4 ">
+  {% csrf_token %}
+  <div class="d-flex">
+    <a class="badge bg-success py-2 px-3 m-2 " href="{{request.META.HTTP_REFERER}}">I do not want to log out yet!</a>
+    <input type="submit" value="logout"/>
+    </div>
+</form>
+
+{% endblock content %}

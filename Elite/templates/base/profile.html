@@ -1,0 +1,51 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-center">
+          <h2 class="mb-0">My Profile</h2>
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <strong>Username:</strong> {{ scout.user.username }}
+            </li>
+            <li class="list-group-item">
+              <strong>Email:</strong> {{ scout.user.email }}
+            </li>
+            <li class="list-group-item">
+              <strong>Organization:</strong> {{ scout.organization }}
+            </li>
+            <li class="list-group-item">
+              <strong>Phone Number:</strong> {{ scout.phone_number }}
+            </li>
+            <li class="list-group-item">
+              <strong>Role:</strong> {{ scout.role }}
+            </li>
+            <li class="list-group-item">
+              <strong>Teams:</strong>
+              <ul class="list-group ms-3 mt-2">
+                {% for team in scout.teams.all %}
+                  <li class="list-group-item py-1 px-2">{{ team.name }}</li>
+                {% empty %}
+                  <li class="list-group-item py-1 px-2 text-muted">No teams assigned.</li>
+                {% endfor %}
+              </ul>
+            </li>
+            <li class="list-group-item">
+              <strong>Joined:</strong> {{ scout.created_at|date:"Y-m-d" }}
+            </li>
+          </ul>
+        </div>
+        <div class="card-footer text-center">
+          <a href="{% url 'dashboard' %}" class="btn btn-outline-primary me-2">Back to Dashboard</a>
+          <a href="{% url 'logout_user' %}" class="btn btn-danger">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

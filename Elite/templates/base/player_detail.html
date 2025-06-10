@@ -1,0 +1,64 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="container my-4 text-center">
+    <h2 class="mb-4">Player Profile</h2>
+    <div class="card shadow-sm p-4">
+        <h1 class="mb-3">{{ player.name }} - {{ player.position }}</h1>
+        <p><strong>Age:</strong> {{ player.age }}</p>
+        <p><strong>Nationality:</strong> {{ player.nationality }}</p>
+        <p><strong>Current Worth:</strong> ${{ player.current_worth }}</p>
+        <p><strong>Height:</strong> {{ player.height }} cm</p>
+        <p><strong>Date of Birth:</strong> {{ player.date_of_birth }}</p>
+        <p><strong>Joined Team:</strong>
+            {% if player.team %}
+                <a href="{% url 'team_detail' player.team.pk %}" class="fw-bold text-primary">{{ player.team.name }}</a>
+            {% else %}
+                <span class="text-muted">No team assigned</span>
+            {% endif %}
+        </p>
+
+
+        <hr>
+        <h3 class="mt-4">Performance Stats</h3>
+        {% if player.performance_stats.exists %}
+            {% for stat in player.performance_stats.all %}
+                <p><strong>Matches Played:</strong> {{ stat.matches_played }}</p>
+                <p><strong>Tries Scored:</strong> {{ stat.tries_scored }}</p>
+                <p><strong>Successful Tackles:</strong> {{ stat.successful_tackles }}</p>
+                <p><strong>Overall Rating:</strong> {{ stat.overall_rating }}</p>
+                {% if request.user.is_staff%}
+                {% comment %} <a href="{% url 'update_stat' stat.player.pk %}" class="btn btn-warning my-3 px-4 rounded-pill shadow-sm">
+                    <i class="bi bi-pencil-square me-2"></i>Edit Stats
+                </a> {% endcomment %}
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>No performance stats available.</p>
+           {% if request.user.is_staff %}
+            {% comment %} <a href="{% url 'update_stat' player.pk %}" class="btn btn-warning my-3 px-4 rounded-pill shadow-sm">
+                <i class="bi bi-pencil-square me-2"></i>Edit Stats
+            </a> {% endcomment %}
+           {% endif%}
+        {% endif %}
+                
+         
+    </div>
+</div>
+
+
+<div class="container my-4 d-flex flex-wrap gap-2 justify-content-center">
+    <a href="{% url 'player_list' %}" class="btn btn-outline-secondary rounded-pill px-4">
+        <i class="bi bi-arrow-left"></i> Back to Players
+    </a>
+    {% if request.user.is_staff %}
+        <a href="{% url 'update_player' player.pk %}" class="btn btn-primary px-4 rounded-pill shadow-sm">
+            <i class="bi bi-pencil-square me-2"></i>Edit Player
+        </a>
+        <a href="{% url 'delete_player' player.pk %}" class="btn btn-danger px-4 rounded-pill shadow-sm">
+            <i class="bi bi-trash me-2"></i>Delete Player
+        </a>
+    {% endif %}
+</div>
+
+{% endblock %}

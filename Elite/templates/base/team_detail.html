@@ -1,0 +1,48 @@
+{% extends "main.html" %}
+
+{% block content %}
+{% load static %}
+<div class="container mt-5">
+    <div class="card mb-4 shadow-lg rounded-4">
+        <div class="row g-0 align-items-center">
+            <div class="col-md-4 text-center py-4">
+                {% if team.logo %}
+                    <img src="{{ team.logo.url }}" class="img-fluid rounded-4 border shadow-sm" alt="{{ team.name }} Logo" style="max-height:220px; object-fit:contain; background:#f8f9fa;">
+                {% else %}
+                    <img src="{{ MEDIA_URL }}team_logo/main_logo.svg" class="img-fluid rounded-4 border shadow-sm" alt="Default Logo" style="max-height:220px; object-fit:contain; background:#f8f9fa;">
+                {% endif %}
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h2 class="card-title fw-bold text-primary">{{ team.name }}</h2>
+                    <p class="card-text mb-2"><i class="bi bi-geo-alt text-info"></i> <strong>Location:</strong> {{ team.location }}</p>
+                    <p class="card-text mb-2"><i class="bi bi-calendar3 text-warning"></i> <strong>Founded:</strong> {{ team.founded_year }}</p>
+                    <p class="card-text mb-2"><i class="bi bi-person-badge text-success"></i> <strong>Coach:</strong> {{ team.coach }}</p>
+                    <p class="card-text mb-2"><i class="bi bi-trophy text-danger"></i> <strong>League:</strong> {{ team.league.name }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="mb-3 text-success">Players</h3>
+    <ul class="list-group mb-4 shadow-sm rounded-4">
+        {% for player in players %}
+            <li class="list-group-item">
+                <i class="bi bi-person-circle text-primary"></i>
+                {{ player.name }} ({{ player.age }} years old, {{ player.nationality }}) - {{ player.get_position_display }}
+            </li>
+        {% empty %}
+            <li class="list-group-item text-muted">No players in this team.</li>
+        {% endfor %}
+    </ul>
+
+    <div class="mt-3 d-flex flex-wrap gap-2">
+        <a href="{% url 'team_list' %}" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left"></i> Back to Teams</a>
+        {% if request.user.is_staff %}
+            <a href="{% url 'add_team' %}" class="btn btn-success btn-sm"><i class="bi bi-plus-circle"></i> Add New Team</a>
+            <a href="{% url 'update_team' team.pk %}" class="btn btn-info btn-sm"><i class="bi bi-pencil-square"></i> Update Team</a>
+            <a href="{% url 'delete_team' team.pk %}" class="btn btn-warning btn-sm"><i class="bi bi-trash"></i> Delete Team</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

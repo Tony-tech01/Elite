@@ -1,0 +1,12 @@
+{% extends 'main.html'%}
+
+{% block content %}
+<form method="POST" class="container my-4">
+    {% csrf_token%}
+<a class="badge bg-success py-2 px-3 m-2 " href="{{request.META.HTTP_REFERER}}">Lemme think about this</a>
+    <input type="submit" value="delete"/> 
+    <div>
+</form>
+
+
+{%endblock%}

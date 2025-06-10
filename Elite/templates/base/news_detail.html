@@ -1,0 +1,41 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card shadow-lg border-0 rounded-4 mx-auto" style="max-width: 800px;">
+        <div class="card-body">
+            <h2 class="mb-3 text-center text-primary">{{ news.title }}</h2>
+            <p class="text-center text-muted"><i class="bi bi-calendar3"></i> {{ news.date }}</p>
+
+            {% if news.image %}
+                <img src="{{ news.image.url }}" class="img-fluid rounded-3 mb-4 d-block mx-auto" alt="{{ news.title }}" style="max-height: 400px; object-fit: cover;">
+            {% endif %}
+
+            <div class="fs-5 text-dark">{{ news.content|linebreaks }}</div>
+            
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{% url 'home' %}" class="btn btn-outline-secondary rounded-pill px-4">
+                    <i class="bi bi-arrow-left"></i> Back to Home
+                </a>
+                <button class="btn btn-primary rounded-pill px-4" onclick="shareNews()">
+                    <i class="bi bi-share-fill"></i> Share
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function shareNews() {
+    if (navigator.share) {
+        navigator.share({
+            title: "{{ news.title }}",
+            text: "Check out this article: {{ news.title }}",
+            url: window.location.href
+        }).catch(console.error);
+    } else {
+        alert("Sharing is not supported in this browser.");
+    }
+}
+</script>
+{% endblock %}

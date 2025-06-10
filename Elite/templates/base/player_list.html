@@ -1,0 +1,87 @@
+{% extends 'main.html' %}
+{% block content %}
+{% load static %}
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="hero-wrap text-center" style="background-image: url('{% static 'images/img_16.jpeg' %}');" data-stellar-background-ratio="0.5">
+            <div class="hero-contents py-5">
+                <h2 class="text-dark fw-bold">Meet Our Players</h2>
+                <p><a href="{% url 'home' %}" class="text-dark text-decoration-none">Home</a> <span class="mx-2 text-white">/</span> <strong class="text-dark">Players</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
+        <h2 class="mb-0 fw-bold text-success">Players</h2>
+        <form method="GET" class="mb-4">
+            <div class="input-group input-group-lg shadow-sm rounded-3">
+                <input type="text" name="name" class="form-control rounded-start-3" placeholder="Search by player's name">
+                <button class="btn btn-primary rounded-end-3" type="submit"><i class="bi bi-search"></i> Search</button>
+            </div>
+        </form>
+        {% if request.user.is_staff %}
+        <a href="{% url 'add_player' %}" class="btn btn-info text-white rounded-pill shadow-sm px-4">
+            <i class="bi bi-person-plus me-2"></i> Add Player
+        </a>
+        {% endif %}
+    </div>
+
+    <div class="row g-4">
+        {% for player in players %}
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <a href="{% url 'player_detail' player.id %}" class="card shadow-sm border-0 rounded-4 h-100 text-decoration-none transition player-card">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center py-4">
+                        <i class="bi bi-person-circle display-4 text-primary mb-2"></i>
+                        <span class="fw-bold fs-5 text-dark">{{ player.name }}</span>
+                    </div>
+                </a>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <p class="text-center text-muted fs-5">No players found.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+.hero-wrap {
+    background-size: cover;
+    background-position: center;
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.hero-contents {
+    background-color: rgba(0, 0, 0, 0.4);
+    display: inline-block;
+    padding: 30px 50px;
+    border-radius: 12px;
+}
+
+.hero-contents h2, .hero-contents p {
+    color: #fff;
+    margin: 0;
+}
+
+.player-card {
+    transition: transform 0.18s, box-shadow 0.18s;
+}
+
+.player-card:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 1.5rem 2.5rem rgba(0,0,0,0.12);
+    background: #f8f9fa;
+    text-decoration: none;
+}
+</style>
+
+{% endblock %}

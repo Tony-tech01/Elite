@@ -1,0 +1,67 @@
+{% extends 'main.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="hero-wrap text-center" style="background-image: url('{% static 'images/trophy.jpeg' %}');" data-stellar-background-ratio="0.5">
+                <div class="hero-contents">
+                    <h2>About Us</h2>
+                    <p><a href="{% url 'home' %}">Home</a> <span class="mx-2">/</span> <strong>About Us</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="site-section">
+        <div class="container">
+            <div class="row align-items-center mb-5">
+                <div class="col-lg-6">
+                    <img src="{% static 'images/about_rugby.jpg' %}" alt="Elite Rugby Scouting" class="img-fluid rounded shadow">
+                </div>
+                <div class="col-lg-6">
+                    <h2 class="text-primary mb-3">About Elite Rugby Scouting</h2>
+                    <p class="lead">Empowering rugby scouts, coaches, and analysts with modern tools for player evaluation and team management.</p>
+                    <ul class="list-group list-group-flush mb-3">
+                        <li class="list-group-item bg-transparent"><i class="bi bi-bar-chart-line text-info me-2"></i> <strong>Advanced Analytics:</strong> Track player stats and performance.</li>
+                        <li class="list-group-item bg-transparent"><i class="bi bi-people text-info me-2"></i> <strong>Team Management:</strong> Manage squads and rosters.</li>
+                        <li class="list-group-item bg-transparent"><i class="bi bi-search text-info me-2"></i> <strong>Scouting Reports:</strong> Create and review detailed reports.</li>
+                        <li class="list-group-item bg-transparent"><i class="bi bi-calendar-event text-info me-2"></i> <strong>Upcoming Matches:</strong> Stay updated with fixtures.</li>
+                    </ul>
+                    <p>Our platform is built with <strong>Django</strong> and <strong>SQLite</strong> for reliability and security.</p>
+                    <a href="{% url 'contact' %}" class="btn btn-info mt-2"><i class="bi bi-envelope me-1"></i>Contact Us</a>
+                </div>
+            </div>
+
+            <div class="row my-5">
+                <div class="col-lg-8 mx-auto">
+                    <div class="card shadow border-0">
+                        <div class="card-body text-center">
+                            <h4 class="card-title text-success mb-3">Why Choose Us?</h4>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <i class="bi bi-lightning-charge text-warning fs-2"></i>
+                                    <h6 class="mt-2">Fast & Reliable</h6>
+                                    <p class="small">Instant access to player and match data.</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <i class="bi bi-shield-lock text-primary fs-2"></i>
+                                    <h6 class="mt-2">Secure</h6>
+                                    <p class="small">Your scouting data is protected.</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <i class="bi bi-graph-up-arrow text-danger fs-2"></i>
+                                    <h6 class="mt-2">Data-Driven</h6>
+                                    <p class="small">Make smarter decisions with analytics.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>   
+        </div>
+    </div>
+</div>
+
+{% endblock %}

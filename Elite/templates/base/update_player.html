@@ -1,0 +1,22 @@
+{% extends "main.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card shadow-lg border-0 rounded-4 mx-auto" style="max-width: 600px;">
+        <div class="card-body">
+            <h2 class="mb-4 text-center text-primary">Update stats for {{player.name}}</h2>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <hr>
+                <h5 class="mb-3 text-success">Performance Stats</h5>
+                {{ stat_form.as_p }}
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{% url 'player_detail' player.pk %}" class="btn btn-outline-secondary rounded-pill px-4">Cancel</a>
+                    <button type="submit" class="btn btn-primary rounded-pill px-4">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

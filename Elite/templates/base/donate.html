@@ -1,0 +1,35 @@
+{% extends 'main.html' %}
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="text-center mb-4">
+                <h2 class="fw-bold">Donate to Stadium Construction</h2>
+                <p class="text-muted">Your contribution helps us build a better future for our community.</p>
+            </div>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <div class="card shadow border-0">
+                <div class="card-body p-4">
+                    <form method="POST" novalidate>
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-success w-100 py-2 mt-3">
+                            <i class="bi bi-phone"></i> Donate with Mpesa
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <small class="text-muted">All donations are secure and processed via M-Pesa.</small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

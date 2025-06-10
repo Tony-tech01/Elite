@@ -1,0 +1,102 @@
+{% extends "main.html" %}
+{% block content %}
+{% load static %}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="hero-wrap text-center d-flex align-items-center justify-content-center"
+             style="background-image: url('{% static 'images/img_11.jpeg' %}'); background-size: cover; background-position: center; height: 60vh;"
+             data-stellar-background-ratio="0.5">
+            <div class="hero-contents py-5 px-4 rounded bg-light bg-opacity-75">
+                <h2 class="text-dark fw-bold">Teams</h2>
+                <p class="mb-0">
+                    <a href="{% url 'home' %}" class="text-dark text-decoration-none">Home</a>
+                    <span class="mx-2 text-dark">/</span>
+                    <strong class="text-dark">Teams</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="container my-5">
+  <h2 class="text-center mb-4 fw-bold text-success">Teams</h2>
+
+  <form method="GET" class="mb-5">
+    <div class="input-group input-group-lg shadow-sm rounded-3">
+      <input type="text" name="name" class="form-control rounded-start-3" placeholder="Search by team name">
+      <button class="btn btn-primary rounded-end-3" type="submit"><i class="bi bi-search"></i> Search</button>
+    </div>
+  </form>
+
+  <div class="row g-4">
+    {% for team in teams %}
+    <div class="col-md-6 col-lg-4">
+      <div class="card shadow-lg border-0 rounded-4 h-100 team-card transition">
+        {% if team.logo %}
+        <img src="{{ team.logo.url }}" class="card-img-top p-3" alt="{{ team.name }} Logo" style="height: 180px; object-fit: contain;">
+        {% else %}
+        <img src="{{ MEDIA_URL }}team_logo/main_logo.svg" class="card-img-top p-3" alt="Default Logo" style="height: 180px; object-fit: contain;">
+        {% endif %}
+        <div class="card-body text-center">
+          <h5 class="card-title fw-semibold">{{ team.name }}</h5>
+          <p class="card-text mb-1"><i class="bi bi-geo-alt text-info"></i> {{ team.location }}</p>
+          <p class="text-muted mb-2"><i class="bi bi-calendar3"></i> Founded: {{ team.founded_year }}</p>
+          <a href="{% url 'team_detail' team.id %}" class="btn btn-outline-primary rounded-pill px-4 mt-2">View Details</a>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p class="text-center text-muted fs-5">No teams found.</p>
+    {% endfor %}
+  </div>
+
+  {% if teams.has_other_pages %}
+  <nav class="mt-4">
+    <ul class="pagination justify-content-center">
+      {% if teams.has_previous %}
+      <li class="page-item"><a class="page-link rounded-pill" href="?page={{ teams.previous_page_number }}">Previous</a></li>
+      {% endif %}
+      <li class="page-item active"><span class="page-link rounded-pill">{{ teams.number }}</span></li>
+      {% if teams.has_next %}
+      <li class="page-item"><a class="page-link rounded-pill" href="?page={{ teams.next_page_number }}">Next</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+  {% endif %}
+
+  {% if request.user.is_staff %}
+  <div class="text-center mt-4">
+    <a href="{% url 'add_team' %}" class="btn btn-success btn-lg rounded-pill shadow"><i class="bi bi-plus-circle me-2"></i>Add New Team</a>
+  </div>
+  {% endif %}
+</div>
+
+<style>
+.hero-wrap {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.hero-contents {
+  max-width: 700px;
+}
+
+.team-card {
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+
+.team-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 1.5rem 2.5rem rgba(0,0,0,0.12);
+}
+</style>
+
+{% endblock %}

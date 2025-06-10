@@ -40,7 +40,6 @@
         <a href="{% url 'team_list' %}" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left"></i> Back to Teams</a>
         {% if request.user.is_staff %}
             <a href="{% url 'add_team' %}" class="btn btn-success btn-sm"><i class="bi bi-plus-circle"></i> Add New Team</a>
-            <a href="{% url 'update_team' team.pk %}" class="btn btn-info btn-sm"><i class="bi bi-pencil-square"></i> Update Team</a>
             <a href="{% url 'delete_team' team.pk %}" class="btn btn-warning btn-sm"><i class="bi bi-trash"></i> Delete Team</a>
         {% endif %}
     </div>

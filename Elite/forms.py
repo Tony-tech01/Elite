@@ -54,7 +54,7 @@ class RegistrationForm(UserCreationForm):
 class TeamForm(forms.ModelForm):
     class Meta:
         model = Team
-        fields = ['coach', 'league', 'logo']
+        fields = '__all__'
 
 
 class DonationForm(forms.Form):

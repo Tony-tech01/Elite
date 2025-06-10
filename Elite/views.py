@@ -13,7 +13,6 @@ from mpesa_api.core.mpesa import Mpesa
 mpesa = Mpesa()
 from rest_framework import viewsets
 from .serializers import PlayerSerializer, TeamSerializer, PerformanceStatSerializer
-from rest_framework.permissions import IsAuthenticated
 
 
 
@@ -21,17 +20,17 @@ from rest_framework.permissions import IsAuthenticated
 class PlayerViewSet(viewsets.ModelViewSet):
     queryset = Player.objects.all()
     serializer_class = PlayerSerializer
-    permission_classes = [IsAuthenticated]
+    
 
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
-    permission_classes = [IsAuthenticated]
+    
 
 class PerformanceStatViewSet(viewsets.ModelViewSet):
     queryset = PerformanceStat.objects.all()
     serializer_class = PerformanceStatSerializer
-    permission_classes = [IsAuthenticated]
+    
 
 def mpesa_callback(request):
     if request.method == "POST":
@@ -213,24 +212,13 @@ def team_detail(request, pk):
 def add_team(request):
     form = TeamForm()
     if request.method == 'POST':
-        form = TeamForm(request.POST)
+        form = TeamForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('team_list',)
     context = {'form': form}    
     return render(request, 'base/add_team.html', context)
 
-@login_required(login_url='login_user')
-def update_team(request, pk):
-    team = Team.objects.get(id=pk)
-    form = TeamForm(request.POST, instance=team)
-    if request.method == 'POST':
-        form = TeamForm(request.POST, instance=team)
-        if form.is_valid():
-            form.save()
-            return redirect('team_detail', pk=pk)
-    context = {'form': form, 'team': team}
-    return render(request, 'base/update_team.html', context)
 
 @login_required(login_url='login_user')
 def delete_team(request, pk):

@@ -4,12 +4,6 @@
 <div class="container mt-4">
     <h2 class="text-center mb-5 fw-bold text-success">Dashboard</h2>
 
-    {% if no_profile %}
-        <div class="alert alert-warning text-center rounded-4 shadow-sm mb-5" role="alert">
-            You have not set up your profile yet..
-        </div>
-    {% endif %}
-
     {% if messages %}
       {% for message in messages %}
         <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
@@ -68,9 +62,9 @@
         <div class="col-12 col-lg-6">
             <div class="card shadow border-0 h-100 rounded-4 bg-white">
                 <div class="card-body">
-                    <h5 class="card-title text-success mb-3 fw-semibold">Welcome to Your Dashboard</h5>
+                    <h5 class="card-title text-success mb-3 fw-semibold">Welcome to Dashboard</h5>
                     <p class="mb-0">
-                        Here you can manage players, scouts, teams, and keep track of upcoming matches. Use the quick actions to navigate or add new records. Stay organized and make the most of your rugby scouting experience!
+                        Here you can see player's stats and team, and keep track of upcoming matches. Use the quick actions to navigate through the players and teams.
                     </p>
                 </div>
             </div>
